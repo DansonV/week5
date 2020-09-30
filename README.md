@@ -20,6 +20,7 @@ At the end of the "skirmish" function, update the hp on the screen for both play
  (Links to an external site.)
 
 Homework
+
 Add a value to your user object called "has_potion" and set the value to true
 Add another button to the screen for 'drink potion'
 When that button is clicked, call a function called 'drink potion'
