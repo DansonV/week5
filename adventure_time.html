@@ -85,21 +85,22 @@
 				enemyDispHP.innerText = enemyHP;
 				
 				//checks outcome of skirmish
-				if (playerHP <= 0) {
+				if (playerHP <= 0 && enemyHP <= 0) {
+					playerDispHP.innerText = 0;
+					enemyDispHP.innerText = 0;
+					endResult = document.getElementById("result");
+					endResult.innerText = "You Died";	
+					alert("Game Over");
+				} else if (playerHP <= 0){
 					playerDispHP.innerText = 0;
 					endResult = document.getElementById("result");
 					endResult.innerText = "You Died";
-				} 
-				if (enemyHP <= 0) {
+					alert("Game Over");
+				} else if (enemyHP <= 0){
 					enemyDispHP.innerText = 0;
 					endResult = document.getElementById("result");
 					endResult.innerText = "VICTORY!";
-				}
-				if (playerHP <= 0 || enemyHP <= 0) {
-					playerDispHP.innerText = 0;
-					enemyDispHP.innerText = 0;
-					endResult = document.getElementById("result");
-					endResult.innerText = "You Died";			
+					alert("Game Completed!");
 				}
 				
 			}
