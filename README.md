@@ -1,6 +1,7 @@
 # week5
 
 IN-CLASS GROUP WORK
+
 We want to utilize the DOM and make the game more interactive
 
 Create a "current_enemy" key in the game object
