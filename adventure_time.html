@@ -1,0 +1,136 @@
+<html>
+	<head>
+		<title>Week 5 - Adventure Game</title>
+	</head>
+	<body>
+		<h1>Adventure Time</h1>
+		
+		<h2>Actions:</h2>
+		<button id = "attackBtn">Attack</button>
+		<button id = "drinkPotionBtn">Drink Potion</button>
+		<hr>
+		
+		<h3>Player:</h3>
+		<p id = "playerDispName"></p>
+		<h3>HP:</h3>
+		<p id = "playerDispHP"></p>
+		<hr>
+				
+		<h3>Enemy:</h3>
+		<p id = "enemyDispName"></p>
+		<h3>HP:</h3>
+		<p id = "enemyDispHP"><p>
+		<hr>
+		
+		<p id = "result"></p>
+				
+		<script src = "human.js"></script>			<!--gets info from human.js -->
+		<script src = "monsters.js"></script>		<!--gets info from monsters.js -->
+		
+		<script>
+			console.log(human);
+			
+			var attackButton = document.getElementById("attackBtn");
+			attackButton.addEventListener("click", skirmish);
+			var drinkPotionButton = document.getElementById("drinkPotionBtn");
+			drinkPotionButton.addEventListener("click",drink_potion);
+					
+			var game = {
+				user: human,						//gets info from human.js
+				monsters: listOfMonsters,			//gets info from monsters.js
+				current_mob: current_enemy
+			}
+			
+			function generateRandomNumber(maxNumber) {
+				return Math.floor(Math.random() * maxNumber);			
+			}
+			
+			var current_enemy_index = generateRandomNumber(game.monsters.length);
+			console.log(current_enemy_index);
+							
+			//1. get the monsters array from the game object
+			//2. using the square bracket, get the monster we want with the random number we generated
+			//3. using dot notation, get the name			
+			var current_enemy = game.monsters[current_enemy_index].name;
+			console.log(current_enemy);
+			
+			// IN-CLASS GROUP WORK
+			// We want to utilize the DOM and make the game more interactive
+			// - Create a "current_enemy" key in the game object
+			// - Populate that key with a random monster from your array (like we did above)
+			// - Add a button on the screen called "Attack" (give it an ID as well)
+			// - When that button is pressed (eventlistener), call a function named "skirmish"
+			// - The skirmish function is going to subtrack our user's damage from the current enemy's hp
+			// - AND take the current_enemies attack from our HP
+			// - After doing both of those things, check to see if either our or the monsters HP is <= 0
+			// - If it is, use alert() to end the game
+
+			game.current_mob = game.monsters[current_enemy_index];
+			
+			function skirmish() {
+				var endResult;
+				
+				//updates player HP
+				var playerHP = document.getElementById("playerDispHP");
+				playerHP = game.user.hp - game.current_mob.damage;
+				game.user.hp = playerHP;
+				
+				//updates enemy HP
+				var enemyHP = document.getElementById("enemyDispHP");
+				enemyHP = game.current_mob.hp - game.user.damage;
+				game.current_mob.hp = enemyHP;
+				
+				//updates display for user
+				playerDispHP.innerText = playerHP;
+				enemyDispHP.innerText = enemyHP;
+				
+				//checks outcome of skirmish
+				if (playerHP <= 0) {
+					playerDispHP.innerText = 0;
+					endResult = document.getElementById("result");
+					endResult.innerText = "You Died";
+				} 
+				if (enemyHP <= 0) {
+					enemyDispHP.innerText = 0;
+					endResult = document.getElementById("result");
+					endResult.innerText = "VICTORY!";
+				}
+				if (playerHP <= 0 || enemyHP <= 0) {
+					playerDispHP.innerText = 0;
+					enemyDispHP.innerText = 0;
+					endResult = document.getElementById("result");
+					endResult.innerText = "You Died";			
+				}
+				
+			}
+			
+			//Add a value to your user object called "has_potion" and set the value to true
+			//Add another button to the screen for 'drink potion'
+			//When that button is clicked, call a function called 'drink potion'
+			//In the function, set the "has_potion" key to false
+			//Also, add 10hp to your user's current HP
+			//If the game.user.has_potion is false, use an alert to let the user know that they don't have a potion to use.
+			function drink_potion() {
+				var potion_HP_val = 10;
+				
+				if (game.user.has_potion == true) {
+					game.user.has_potion = false;
+					game.user.hp = game.user.hp + potion_HP_val;
+					playerDispHP.innerText = game.user.hp;
+				} else {
+					alert("You do not have a potion to use.");
+				}				
+			}
+			
+			// We also want to display data about the game on the screen so my ma' can play without using the console
+			// - Create a <p> for the players name and hp
+			// - Create a <p> for the current_enemies name and hp
+			// - Using javascript DOM, update the .innerText of those elements
+			// - At the end of the "skirmish" function, update the hp on the screen for both player and monster			
+			playerDispName.innerText = game.user.name;
+			playerDispHP.innerText = game.user.hp;
+			enemyDispName.innerText = game.current_mob.name;
+			enemyDispHP.innerText = game.current_mob.hp;
+		</script>
+	</body>
+</html>

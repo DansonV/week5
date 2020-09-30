@@ -11,7 +11,7 @@ var listOfMonsters= [
 			},
 			{
 						name: "Orc",
-						hp: 80,
+						hp: 75,
 						damage: 20
 			}	
 ]
